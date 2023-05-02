@@ -1,18 +1,18 @@
-import multer from 'multer'
+import multer from "multer";
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, './public/videos/');
+    cb(null, "./public/uplodedData/");
   },
   filename: function (req, file, cb) {
     const uniqueSuffix = Date.now();
-    cb(null, `${uniqueSuffix}-${file.originalname.replace(" ",'')}`);
-  }
+    cb(null, `${uniqueSuffix}-${file.originalname.replace(" ", "")}`);
+  },
 });
 
 const uploadMiddleware = multer({
   limits: {
-    fileSize:1024 * 1024 * 300
+    fileSize: 1024 * 1024 * 300,
   },
   storage,
 });

@@ -1,7 +1,7 @@
-import { AppDataSource } from '../../data-source';
-import { Users } from '../../entities/users';
-import { checkHash } from '../../utils/hash';
-import { createToken } from '../../utils/token';
+import { AppDataSource } from "../../data-source";
+import { Users } from "../../entities/users";
+import { checkHash } from "../../utils/hash";
+import { createToken } from "../../utils/token";
 
 const usersSource = AppDataSource.getRepository(Users);
 
@@ -12,7 +12,6 @@ export const isAuthUser = async (email: string, password: string) => {
         email,
       },
     });
-    console.log(UserData);
     if (checkHash(UserData?.password, password)) {
       const dataToSend = {
         _id: UserData?._id,
@@ -25,10 +24,10 @@ export const isAuthUser = async (email: string, password: string) => {
         userId: UserData._id,
         token: token,
       };
-    } else throw { message: 'Unauthorized' };
+    } else throw { message: "Unauthorized" };
   } catch (err) {
     throw {
-      message: 'Unauthorized',
+      message: "Unauthorized",
       head: 401,
     };
   }

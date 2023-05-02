@@ -1,9 +1,9 @@
-import { AppDataSource } from '../../data-source';
-import { Videos } from '../../entities/videos';
-import { Users } from '../../entities/users';
-import { VideoInfo } from '../../entities/videoInfo';
-import { VideoType, VideoValidator } from '../../utils/validation';
-import { SucessResponce, ErrorResponce } from '../../@types/responceTypes';
+import { AppDataSource } from "../../data-source";
+import { Videos } from "../../entities/videos";
+import { Users } from "../../entities/users";
+import { VideoInfo } from "../../entities/videoInfo";
+import { VideoType, VideoValidator } from "../../utils/validation";
+import { SucessResponce, ErrorResponce } from "../../@types/responceTypes";
 
 const VideosSource = AppDataSource.getRepository(Videos);
 const VideosInfoSource = AppDataSource.getRepository(VideoInfo);
@@ -58,13 +58,13 @@ export const getVideos = async (id?: string) => {
       allVideos = await VideosSource.find();
     }
     return {
-      message: 'Request Successful',
+      message: "Request Successful",
       data: allVideos,
     } as SucessResponce;
   } catch (err) {
     console.log(err);
     throw {
-      message: 'Some Error Occured',
+      message: "Some Error Occured",
       data: [],
     } as ErrorResponce;
   }
@@ -72,40 +72,40 @@ export const getVideos = async (id?: string) => {
 
 export const getLiveVideos = async () => {
   try {
-    const dbData = await VideosSource.createQueryBuilder('videos')
-      .leftJoin('videos.user', 'user')
-      .leftJoin('videos.videoInfo', 'videoInfo')
+    const dbData = await VideosSource.createQueryBuilder("videos")
+      .leftJoin("videos.user", "user")
+      .leftJoin("videos.videoInfo", "videoInfo")
       .select([
-        'videos._id',
-        'videos.title',
-        'videos.description',
-        'videos.thumbnail',
-        'videos.tags',
-        'videos.dateCreated',
-        'videos.dateModified',
-        'videos.videoInfo',
-        'videoInfo.fieldname',
-        'videoInfo.originalname',
-        'videoInfo.encoding',
-        'videoInfo.mimetype',
-        'videoInfo.destination',
-        'videoInfo.filename',
-        'videoInfo.path',
-        'videoInfo.size',
-        'videoInfo.dateCreated',
-        'user._id',
-        'user.userName',
+        "videos._id",
+        "videos.title",
+        "videos.description",
+        "videos.thumbnail",
+        "videos.tags",
+        "videos.dateCreated",
+        "videos.dateModified",
+        "videos.videoInfo",
+        "videoInfo.fieldname",
+        "videoInfo.originalname",
+        "videoInfo.encoding",
+        "videoInfo.mimetype",
+        "videoInfo.destination",
+        "videoInfo.filename",
+        "videoInfo.path",
+        "videoInfo.size",
+        "videoInfo.dateCreated",
+        "user._id",
+        "user.userName",
       ])
       .getMany();
 
     return {
-      message: 'Request Successful',
+      message: "Request Successful",
       data: dbData,
     } as SucessResponce;
   } catch (err) {
     console.log(err);
     throw {
-      message: 'Some Error Occured',
+      message: "Some Error Occured",
       data: [],
     } as ErrorResponce;
   }
@@ -116,6 +116,7 @@ export const addVideo = async (
   image: Express.Multer.File
 ) => {
   try {
+    console.log(videoData, image);
     const parsedData: VideoType = await VideoValidator.parseAsync(videoData);
 
     const User = await UsersSource.findOne({
@@ -125,22 +126,22 @@ export const addVideo = async (
     });
     const regX = /(\[|\]|"|'|\/|\\ |,)/g;
 
+
     const newVideo = new Videos();
     newVideo.user = User;
     newVideo.title = parsedData.title;
     newVideo.description = parsedData.description;
-    newVideo.tags = parsedData.tags?.replace(regX, '');
+    newVideo.tags = parsedData.tags?.replace(regX, "");
     newVideo.thumbnail = JSON.stringify(image);
     const data = await VideosSource.save(newVideo);
-
     return {
-      message: 'User added successfully',
+      message: "User added successfully",
       data: data,
     } as SucessResponce;
   } catch (err) {
     console.log(err);
     throw {
-      message: 'Some Error Occured',
+      message: "Some Error Occured",
       data: [],
       error: err,
     } as ErrorResponce;
@@ -157,13 +158,13 @@ export const deleteVideo = async (id: string) => {
     const data = await VideosSource.remove(video);
 
     return {
-      message: 'Deleted video successfully',
+      message: "Deleted video successfully",
       data: data,
     } as SucessResponce;
   } catch (err) {
     console.log(err);
     throw {
-      message: 'Some Error Occured',
+      message: "Some Error Occured",
       data: [],
       error: err,
     } as ErrorResponce;
@@ -200,13 +201,13 @@ export const addVideoInfo = async ({
     const data = await VideosSource.save(video);
 
     return {
-      message: 'Video file added successfully',
+      message: "Video file added successfully",
       data,
     } as SucessResponce;
   } catch (err) {
     console.log(err);
     throw {
-      message: 'Some Error Occured',
+      message: "Some Error Occured",
       data: [],
       error: err,
     } as ErrorResponce;

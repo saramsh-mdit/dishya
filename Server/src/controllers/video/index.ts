@@ -1,17 +1,17 @@
-import { Router } from 'express';
+import { Router } from "express";
 
-import logger from '../../utils/logger/index';
+import logger from "../../utils/logger/index";
 import {
   addVideo,
   addVideoInfo,
   deleteVideo,
   getVideos,
-} from './video.service';
-import uploadMiddleware from '../../middleware/uploadMiddleware';
+} from "./video.service";
+import uploadMiddleware from "../../middleware/uploadMiddleware";
 
 const VideoController = Router();
 // Get all Video
-VideoController.get('/all', async (_, res) => {
+VideoController.get("/all", async (_, res) => {
   try {
     const data = await getVideos();
     res.status(200).send(data);
@@ -22,7 +22,7 @@ VideoController.get('/all', async (_, res) => {
 });
 
 // Get a video
-VideoController.get('/', async (_, res) => {
+VideoController.get("/", async (_, res) => {
   try {
     const userId = res.locals.userId;
     const data = await getVideos(userId);
@@ -35,10 +35,11 @@ VideoController.get('/', async (_, res) => {
 
 // Create Video
 VideoController.post(
-  '/',
-  uploadMiddleware.single('image'),
+  "/",
+  uploadMiddleware.single("image"),
   async (req, res) => {
     try {
+      console.log("Working", req, res);
       const image = { ...req.file };
       const { title, description, tags } = req.body;
       const userId = res.locals.userId;
@@ -52,7 +53,7 @@ VideoController.post(
 );
 
 // Delete video
-VideoController.delete('/', async (req, res) => {
+VideoController.delete("/", async (req, res) => {
   try {
     const { id } = req.body;
     const data = await deleteVideo(id);
@@ -65,8 +66,8 @@ VideoController.delete('/', async (req, res) => {
 
 // Video File Upload
 VideoController.post(
-  '/upload',
-  uploadMiddleware.single('video'),
+  "/upload",
+  uploadMiddleware.single("video"),
   async (req, res) => {
     try {
       const fileData = { ...req.file };

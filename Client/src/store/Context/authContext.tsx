@@ -6,7 +6,7 @@ import { getMyInfo } from "../../api/get";
 export type userType = {
   userName: string;
   email: string;
-  userId: string;
+  _id: string;
   token: string | null;
   dateCreated: Date;
 };
@@ -31,7 +31,7 @@ const InitialState: stateType = {
   user: {
     userName: "Guest User",
     email: "guest@user.com",
-    userId: "",
+    _id: "",
     token: localStorage.getItem("token") ?? null,
     dateCreated: new Date(),
   },

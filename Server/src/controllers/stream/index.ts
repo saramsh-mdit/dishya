@@ -76,7 +76,6 @@ StreamController.get("/recommendation/:id", async (req, res) => {
   try {
     const id = req.params.id;
     const data = await getRecommendataion(id);
-    console.log("Data", data);
     res.status(200).send(data);
   } catch (err) {
     logger.error("Error", err);

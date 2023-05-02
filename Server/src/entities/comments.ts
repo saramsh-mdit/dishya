@@ -1,12 +1,18 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn } from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  CreateDateColumn,
+  UpdateDateColumn,
+  OneToMany,
+  ManyToOne,
+} from "typeorm";
+import { Users } from "./users";
 
 @Entity()
 export class Comments {
-  @PrimaryGeneratedColumn('uuid')
+  @PrimaryGeneratedColumn("uuid")
   _id: string;
-
-  @Column({ length: 40 })
-  userId?: string;
 
   @Column({ length: 40 })
   videoId?: string;
@@ -19,4 +25,7 @@ export class Comments {
 
   @UpdateDateColumn()
   dateModified: Date;
+
+  @ManyToOne(() => Users, (users) => users.comments)
+  user: Users;
 }

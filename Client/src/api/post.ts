@@ -31,7 +31,7 @@ export const postRegister = (registerData: register) =>
   axiosInstance.post("/api/auth/register", registerData);
 
 export const postComment = (commentData: comment) =>
-  axiosInstanceAuth.post("/p-api/comments", commentData);
+  axiosInstanceAuth.post("/api/comments", commentData);
 
 export const postTag = (tagData: { name: string }) =>
   axiosInstanceAuth.post("/p-api/tags", tagData);

@@ -15,7 +15,6 @@ const SearchList = () => {
     queryKey: [`videos-{search}`],
     queryFn: () => getVideoByQuery(search!),
   });
-  if (data) console.log(data?.data);
   return (
     <div className="grid gap-8 w-full px-10 py-20">
       <Search />
