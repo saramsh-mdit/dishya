@@ -6,5 +6,8 @@
 
 # Run Commands to run:
 
-Terminal 1: cd Client && yarn && yarn dev
-Terminal 2: cd Server && yarn && yarn dev
+_Client Terminal_
+`cd Client && yarn && yarn dev`
+
+_Server Terminal_
+`cd Server && yarn && yarn dev`
