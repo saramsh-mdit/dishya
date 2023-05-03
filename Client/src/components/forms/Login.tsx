@@ -35,6 +35,7 @@ const LoginForm = () => {
       form.reset();
       // Notification
       toast("Login Sucessfully");
+      window.location.href = "/profile";
     },
     onError: () => toast("Login Failed"),
   });
