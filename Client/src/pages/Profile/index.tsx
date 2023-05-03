@@ -47,7 +47,10 @@ export const ProfileInfo = () => {
 export const Controls = () => {
   const navigate = useNavigate();
   const [showTagForm, setShowTagForm] = React.useState<boolean>(false);
-
+  const logOutHandler = () => {
+    localStorage.removeItem("token");
+    window.location.href = "login";
+  };
   return (
     <article className="grid gap-2 text-gray-800">
       <Title order={3}>Controls</Title>
@@ -56,7 +59,9 @@ export const Controls = () => {
         <Button color="green" onClick={() => setShowTagForm(!showTagForm)}>
           {showTagForm ? "Hide Tags Form" : "Add Tags"}
         </Button>
-        <Button color="red">Log Out</Button>
+        <Button color="red" onClick={logOutHandler}>
+          Log Out
+        </Button>
       </div>
       {showTagForm && <TagForm />}
     </article>

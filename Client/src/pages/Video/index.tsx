@@ -62,7 +62,7 @@ const VideoDetails = () => {
       <section className="w-full grid gap-4">
         <div>
           <video
-            className="w-full h-[500px] object-contain border border-solid border-gray-400 rounded-lg"
+            className="w-full h-[500px] object-contain border border-solid bg-black border-gray-400 rounded-lg"
             src={`http://localhost:3400/api/stream/${id}`}
             controls={true}
             crossOrigin="anonymous"
@@ -117,7 +117,7 @@ const CommentDetails = ({ videoId }: { videoId: string }) => {
       <section className="grid gap-1">
         {commentData?.data?.data?.data?.map((item: CommentInfoT) => (
           <CommentCard
-          videoId={videoId}
+            videoId={videoId}
             key={item._id}
             commentId={item._id}
             userId={item?.user?._id || "unknown"}

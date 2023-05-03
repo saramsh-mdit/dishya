@@ -1,7 +1,9 @@
+import { AppDataSource } from "../../data-source";
+import { Tags } from "../../entities/tags";
 import { CosineCalculator } from "./cosineAlgo";
 import MergeSort from "./mergeSort";
 
-type keywords = {
+export type keywords = {
   name: string;
 };
 
@@ -19,31 +21,29 @@ export type VideoInfoRec = {
   };
 };
 
-const keywordsData: keywords[] = [
-  { name: "action" },
-  { name: "drama" },
-  { name: "film" },
-  { name: "funny" },
-  { name: "study" },
-  { name: "movie" },
-];
-
 const getArrayOfString = (dataset: keywords[], userData: string) => {
-  const matrixArray: number[] = [];
   const userDataSets = userData.split(" ");
-  dataset?.forEach((item) => {
-    if (userDataSets.some((userKey) => item.name.includes(userKey)))
-      matrixArray.push(1);
-    matrixArray.push(0);
+  const matrixArray = dataset?.map((item) => {
+    if (userDataSets.includes(item.name)) return 1;
+    return 0;
   });
   return matrixArray;
 };
 
-// const storeResultInput = getArrayOfString(keywordsData, 'fun');
-// const storeResultInputSecond = getArrayOfString(keywordsData, 'movie fun');
-// console.log(storeResultInput, storeResultInputSecond);
+//
+const keywordsDataSetGetter = async () =>
+  (await AppDataSource.getRepository(Tags).find({
+    select: {
+      name: true,
+    },
+  })) as keywords[];
 
-const recommendationGenerator = (data: VideoInfoRec[], video: VideoInfoRec) => {
+const recommendationGenerator = async (
+  data: VideoInfoRec[],
+  video: VideoInfoRec,
+  keywordsDataSet?: keywords[]
+) => {
+  const keywordsData = keywordsDataSet || (await keywordsDataSetGetter());
   // Video
   const sourceMatrix = getArrayOfString(keywordsData, video.tags);
   sourceMatrix.push(1);

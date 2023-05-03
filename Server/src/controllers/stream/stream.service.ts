@@ -107,17 +107,25 @@ export const getRecommendataion = async (id: string) => {
       },
     })) as VideoInfoRec;
 
-    const result = recommendationGenerator(allVideos, video);
+    const result = await recommendationGenerator(allVideos, video);
     // return result;
     const IdList = result?.map((item) => item?.id);
-    const data = await VideosSource.find({
-      relations: {
-        videoInfo: true,
-      },
-      where: {
-        _id: In(IdList),
-      },
+    const data = await Promise.all(
+      IdList.map(async (item) => {
+        return await VideosSource.findOne({ where: { _id: item } });
+      })
+    );
+    data?.forEach((item, index) => {
+      console.log(`DB-${item._id} IdList-${IdList[index]}`);
     });
+    // const data = await VideosSource.find({
+    //   relations: {
+    //     videoInfo: true,
+    //   },
+    //   where: {
+    //     _id: In(IdList),
+    //   },
+    // });
     return data;
   } catch (e) {
     throw { ...e };

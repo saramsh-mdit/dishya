@@ -124,14 +124,14 @@ export const addVideo = async (
         _id: parsedData.userId,
       },
     });
-    const regX = /(\[|\]|"|'|\/|\\ |,)/g;
-
+    const regX = /[//,"'`[\]]/g;
 
     const newVideo = new Videos();
     newVideo.user = User;
     newVideo.title = parsedData.title;
     newVideo.description = parsedData.description;
     newVideo.tags = parsedData.tags?.replace(regX, "");
+    console.log(newVideo.tags);
     newVideo.thumbnail = JSON.stringify(image);
     const data = await VideosSource.save(newVideo);
     return {

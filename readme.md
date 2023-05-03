@@ -2,6 +2,7 @@
 
 1. Install Postgres Database if Not
 2. Create database name college in psql
+   `CREATE DATABASE college;`
 3. Change DB credentials
 
 # Run Commands to run:
