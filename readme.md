@@ -5,6 +5,8 @@
    `CREATE DATABASE college;`
 3. Change DB credentials
 
+4. Create a Directory `public/uplodedData` in Server
+
 # Run Commands to run:
 
 _Client Terminal_

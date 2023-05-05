@@ -8,6 +8,7 @@ import {
   getCommentByVideoId,
   getVideoRecommendation,
   getVideos,
+  getViewsByVideoId,
 } from "../../api/get";
 import { VideoInfo } from "../Home";
 import CommentForm from "../../components/forms/Comment";
@@ -34,6 +35,7 @@ type CommentInfoT = {
 
 const VideoDetails = () => {
   const { id } = useParams();
+  const [viewCount, setViewCount] = React.useState<number>();
   const [currentVideoInfo, setCurrentVideoInfo] = React.useState<VideoInfoT>({
     title: "Loading",
     description: "Loading",
@@ -41,6 +43,14 @@ const VideoDetails = () => {
   const { isLoading, isError, data } = useQuery({
     queryKey: [`recommendation-${id}`],
     queryFn: () => getVideoRecommendation(id!),
+  });
+
+  const view = useQuery({
+    queryKey: [],
+    queryFn: () => getViewsByVideoId(id!),
+    onSuccess: ({ data }) => {
+      setViewCount(data?.views);
+    },
   });
 
   useQuery({
@@ -62,26 +72,24 @@ const VideoDetails = () => {
       <section className="w-full grid gap-4">
         <div>
           <video
-            className="w-full h-[500px] object-contain border border-solid bg-black border-gray-400 rounded-lg"
+            className="w-full h-[500px] min-h-[70vh] object-contain border border-solid bg-black border-gray-400 rounded-lg"
             src={`http://localhost:3400/api/stream/${id}`}
             controls={true}
             crossOrigin="anonymous"
           />
           <div className="grid gap-2">
-            <Title order={2}>{currentVideoInfo.title}</Title>
+            <div className="flex justify-between gap-4">
+              <Title order={2}>{currentVideoInfo.title}</Title>
+              <div className="flex items-center gap-1 cursor-pointer text-gray-700">
+                <Icon icon="ic:outline-remove-red-eye" hFlip={true} />
+                <Text>
+                  {typeof viewCount === "number" ? viewCount : "Loading"}
+                </Text>
+              </div>
+            </div>
             <Text className="p-2 text-sm bg-gray-200 rounded">
               {currentVideoInfo.description}
             </Text>
-            <div className="flex gap-8 text-gray-700">
-              <div className="flex items-center gap-1 cursor-pointer hover:text-blue-900">
-                <Icon icon="mdi:like" hFlip={true} />
-                <Text>Likes</Text>
-              </div>
-              <div className="flex items-center gap-1 cursor-pointer hover:text-blue-900">
-                <Icon icon="material-symbols:comment-rounded" />
-                <Text>Comments</Text>
-              </div>
-            </div>
           </div>
         </div>
         <section className="grid">

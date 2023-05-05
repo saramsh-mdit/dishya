@@ -74,9 +74,6 @@ export const AuthContextProvider = ({ children }: ChildrenProp) => {
       const userData: userType = data?.data?.data;
       dispatch({ type: "ADD_USER", payload: userData });
     },
-    onError: (e) => {
-      navigation("/login");
-    },
   });
 
   return (

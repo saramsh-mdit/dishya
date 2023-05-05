@@ -9,7 +9,8 @@ import { AuthContext } from "../../store/Context/authContext";
 import { useQuery } from "@tanstack/react-query";
 import { getMyVideos } from "../../api/get";
 import { VideoInfo } from "../Home";
-import VideoCard from "../../components/global/VideoCard";
+import VideoCard, { VideoCardAdmin } from "../../components/global/VideoCard";
+import { VideoUploadContext } from "../../store/Context/videoUpload";
 
 const ProfilePage = () => {
   return (
@@ -46,16 +47,31 @@ export const ProfileInfo = () => {
 
 export const Controls = () => {
   const navigate = useNavigate();
+  const videoUploadContext = React.useContext(VideoUploadContext);
+
   const [showTagForm, setShowTagForm] = React.useState<boolean>(false);
+
   const logOutHandler = () => {
     localStorage.removeItem("token");
     window.location.href = "login";
   };
+
+  React.useEffect(() => {
+    if (!localStorage.getItem("token")) window.location.href = "/login";
+  }, [videoUploadContext]);
+
   return (
     <article className="grid gap-2 text-gray-800">
       <Title order={3}>Controls</Title>
       <div className="flex gap-4 p-4 bg-blue-100 rounded">
-        <Button onClick={() => navigate("/profile/upload")}>Add Video</Button>
+        <Button
+          onClick={() => {
+            videoUploadContext.dispatch({ type: "RESET" });
+            navigate("/profile/upload");
+          }}
+        >
+          Add Video
+        </Button>
         <Button color="green" onClick={() => setShowTagForm(!showTagForm)}>
           {showTagForm ? "Hide Tags Form" : "Add Tags"}
         </Button>
@@ -76,12 +92,13 @@ export const MyVideos = () => {
   return (
     <div className="grid text-gray-800">
       <Title order={3}>My Video</Title>
-      <div className="mt-4 grid gap-4 gap-y-8 max-w-5xl w-full md:grid-cols-2 lg:grid-cols-3">
+      <div className="mt-4 grid gap-4 gap-y-8 max-w-5xl w-full md:grid-cols-2">
+        {/* <div className="flex flex-wrap gap-4"> */}
         {isLoading ? (
           <Text>Loading</Text>
         ) : (
           data?.data?.data?.map((item: VideoInfo) => {
-            return <VideoCard key={item._id} {...item} />;
+            return <VideoCardAdmin key={item._id} {...item} />;
           })
         )}
       </div>

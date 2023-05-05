@@ -25,12 +25,12 @@ const Home = () => {
   //   );
 
   return (
-    <div className="grid gap-8 w-full px-10 py-20">
+    <div className="grid gap-4 w-full px-10 py-10">
       <Title order={2} className="text-center">
         Search Videos
       </Title>
       <Search />
-      <div className="mt-4 grid gap-4 gap-y-8 max-w-5xl w-full md:grid-cols-2 lg:grid-cols-3">
+      <div className="mt-4 mx-auto grid gap-4 gap-y-8 max-w-5xl w-full md:grid-cols-2 lg:grid-cols-3">
         {isLoading ? (
           <Text>Loading</Text>
         ) : (

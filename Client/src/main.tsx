@@ -11,7 +11,13 @@ import ContextStore from "./store/store";
 import "react-toastify/dist/ReactToastify.css";
 import "./index.scss";
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: Infinity,
+    },
+  },
+});
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>

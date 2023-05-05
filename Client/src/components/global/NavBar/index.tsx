@@ -30,7 +30,7 @@ const NavBar = () => {
     !!localStorage.getItem("token")
   );
   return (
-    <nav className="p-0 m-0 px-8 flex justify-between items-center bg-blue-300">
+    <nav className="p-0 m-0 px-8 flex justify-between items-center bg-blue-300 brand-lg">
       <Link
         to="/"
         className="flex gap-2 items-center hover:text-blue-500 text-white"

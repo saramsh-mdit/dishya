@@ -54,6 +54,7 @@ const recommendationGenerator = async (
     const score = CosineCalculator(itemMatrix, sourceMatrix);
     return { score, id: item._id };
   });
+  console.log(`${new Date()} Recommendatation Result:`, result);
   return MergeSort(result.filter((data) => data.score != 0)).reverse();
 };
 

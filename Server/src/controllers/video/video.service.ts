@@ -116,7 +116,6 @@ export const addVideo = async (
   image: Express.Multer.File
 ) => {
   try {
-    console.log(videoData, image);
     const parsedData: VideoType = await VideoValidator.parseAsync(videoData);
 
     const User = await UsersSource.findOne({
@@ -131,7 +130,6 @@ export const addVideo = async (
     newVideo.title = parsedData.title;
     newVideo.description = parsedData.description;
     newVideo.tags = parsedData.tags?.replace(regX, "");
-    console.log(newVideo.tags);
     newVideo.thumbnail = JSON.stringify(image);
     const data = await VideosSource.save(newVideo);
     return {
@@ -150,9 +148,13 @@ export const addVideo = async (
 
 export const deleteVideo = async (id: string) => {
   try {
+    if (!id) throw {};
     const video = await VideosSource.findOne({
       where: {
         _id: id,
+      },
+      relations: {
+        videoInfo: true,
       },
     });
     const data = await VideosSource.remove(video);

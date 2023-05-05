@@ -23,12 +23,12 @@ export const increaseViews = async (videoId: string) => {
     if (data) {
       data.views = data.views + 1;
       data.dateModified = new Date();
-      viewsSource.save(data);
+      await viewsSource.save(data);
     } else {
       const viewItem = new Views();
       viewItem.views = viewItem.views + 1;
       viewItem.videoId = videoId;
-      viewsSource.save(viewItem);
+      await viewsSource.save(viewItem);
     }
   } catch (err) {
     throw { ...err };
@@ -50,14 +50,13 @@ export const getSearchResult = async (search: string) => {
     })) as dataItem[];
     const result = SearchAlgorithm(allVideos, search);
     const IdList = result?.map((item) => item?.id);
-    const data = await VideosSource.find({
-      relations: {
-        videoInfo: true,
-      },
-      where: {
-        _id: In(IdList),
-      },
-    });
+    const data = await Promise.all(
+      IdList.map(async (item) => {
+        return await VideosSource.findOne({
+          where: { _id: item },
+        });
+      })
+    );
     return data;
   } catch (e) {
     throw { ...e };
@@ -66,24 +65,26 @@ export const getSearchResult = async (search: string) => {
 
 export const getRecommendataion = async (id: string) => {
   try {
-    const allVideos = (await VideosSource.find({
-      select: {
-        _id: true,
-        title: true,
-        description: true,
-        tags: true,
-        dateCreated: true,
-        dateModified: true,
-        user: {
+    const allVideos = (
+      await VideosSource.find({
+        select: {
           _id: true,
-          userName: true,
+          title: true,
+          description: true,
+          tags: true,
+          dateCreated: true,
+          dateModified: true,
+          user: {
+            _id: true,
+            userName: true,
+          },
         },
-      },
-      relations: {
-        videoInfo: true,
-        user: true,
-      },
-    })) as VideoInfoRec[];
+        relations: {
+          videoInfo: true,
+          user: true,
+        },
+      })
+    ).filter((item) => item._id !== id) as VideoInfoRec[];
 
     const video = (await VideosSource.findOne({
       select: {
@@ -115,17 +116,19 @@ export const getRecommendataion = async (id: string) => {
         return await VideosSource.findOne({ where: { _id: item } });
       })
     );
-    data?.forEach((item, index) => {
-      console.log(`DB-${item._id} IdList-${IdList[index]}`);
+    return data;
+  } catch (e) {
+    throw { ...e };
+  }
+};
+
+export const getViews = async (id: string) => {
+  try {
+    const data = await viewsSource.findOne({
+      where: {
+        videoId: id,
+      },
     });
-    // const data = await VideosSource.find({
-    //   relations: {
-    //     videoInfo: true,
-    //   },
-    //   where: {
-    //     _id: In(IdList),
-    //   },
-    // });
     return data;
   } catch (e) {
     throw { ...e };
