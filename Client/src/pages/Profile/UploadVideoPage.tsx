@@ -43,21 +43,17 @@ const UploadVideoPage = () => {
             label={<Text className="text-sm">Step 3: Complete</Text>}
           >
             Step 3 content: Get full access
-          </Stepper.Step>
-          <Stepper.Completed>
             <div className="grid gap-8 mx-4 my-8 justify-center">
               <Title className="text-blue-500 text-center">
-                Congratilations <br />
+                Congratulations <br />
                 Video Uploaded Sucessfully
               </Title>
 
-              <Button className="mx-8">
-                <Link to="/profile" className="text-white">
-                  Go Back to Profile
-                </Link>
-              </Button>
+              <Link to="/profile" className="text-white mx-auto">
+                <Button>Go Back to Profile</Button>
+              </Link>
             </div>
-          </Stepper.Completed>
+          </Stepper.Step>
         </Stepper>
       </section>
     </PageWrapper>

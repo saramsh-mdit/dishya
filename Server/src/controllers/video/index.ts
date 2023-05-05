@@ -39,7 +39,6 @@ VideoController.post(
   uploadMiddleware.single("image"),
   async (req, res) => {
     try {
-      console.log("Working", req, res);
       const image = { ...req.file };
       const { title, description, tags } = req.body;
       const userId = res.locals.userId;
@@ -53,9 +52,9 @@ VideoController.post(
 );
 
 // Delete video
-VideoController.delete("/", async (req, res) => {
+VideoController.delete("/:id", async (req, res) => {
   try {
-    const { id } = req.body;
+    const id = req.params?.id;
     const data = await deleteVideo(id);
     res.status(200).send(data);
   } catch (err) {

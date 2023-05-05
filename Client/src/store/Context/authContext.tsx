@@ -2,6 +2,7 @@ import React from "react";
 import { ChildrenProp } from "../store";
 import { useQuery } from "@tanstack/react-query";
 import { getMyInfo } from "../../api/get";
+import { useNavigate } from "react-router-dom";
 
 export type userType = {
   userName: string;
@@ -65,6 +66,7 @@ const AuthReducer = (state: stateType, action: ActionType): stateType => {
 
 export const AuthContextProvider = ({ children }: ChildrenProp) => {
   const [state, dispatch] = React.useReducer(AuthReducer, InitialState);
+  const navigation = useNavigate();
   useQuery({
     queryKey: ["userInfo"],
     queryFn: getMyInfo,

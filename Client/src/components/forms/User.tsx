@@ -1,12 +1,14 @@
 import React from "react";
 import { useForm } from "@mantine/form";
 import { Button, PasswordInput, TextInput } from "@mantine/core";
-// import { notifications } from '@mantine/notifications';
-import { AuthContext, userType } from "../../store/Context/authContext";
-import { login, postRegister, register } from "../../api/post";
+import { useNavigate } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
 
+import { postRegister, register } from "../../api/post";
+import { AuthContext, userType } from "../../store/Context/authContext";
+
 const UserForm = () => {
+  const navigation = useNavigate();
   const authContext = React.useContext(AuthContext);
   const form = useForm<register>({
     initialValues: {
@@ -34,6 +36,8 @@ const UserForm = () => {
       authContext.dispatch({ type: "ADD_USER", payload: userData });
       localStorage.setItem("token", userData?.token!);
       form.reset();
+      navigation("/login");
+
       // Notification
       // notifications.show({
       //   title: 'Login Successfully',

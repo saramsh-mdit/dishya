@@ -32,7 +32,7 @@ export function getMatch(source: string, data: string) {
   let common = 0;
   queryString?.forEach((dString) => {
     dataString.forEach((qString) => {
-      if (dString.toLowerCase() === qString.toLocaleLowerCase()) {
+      if (dString.toLowerCase().includes(qString.toLocaleLowerCase())) {
         common++;
       }
     });
@@ -73,8 +73,10 @@ const calculateFinalResult = (data?: resultData[]) => {
 };
 export default function SearchAlgorithm(dataset: dataItem[], query: string) {
   const result = getCounter(dataset, query);
-  console.log("RESULT", result);
-  console.log("FINAL RESULT", calculateFinalResult(result));
   const finalResult = calculateFinalResult(result);
-  return MergeSort(finalResult.filter((data) => data.score != 0));
+  console.log(
+    `"${query}" Search Result:`,
+    MergeSort(finalResult.filter((data) => data.score != 0)).reverse()
+  );
+  return MergeSort(finalResult.filter((data) => data.score != 0)).reverse();
 }

@@ -41,7 +41,7 @@ export const postVideo = (videoData: video) => {
   dataToUpload.append("title", videoData?.title);
   dataToUpload.append("description", videoData?.description);
   dataToUpload.append("image", videoData?.image);
-  dataToUpload.append("tags", JSON.stringify(videoData?.tags));
+  dataToUpload.append("tags", videoData?.tags);
   return axiosInstanceAuth.post("/p-api/video", dataToUpload);
 };
 

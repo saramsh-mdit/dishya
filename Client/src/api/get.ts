@@ -21,6 +21,10 @@ export const getCommentByVideoId = (id: string) => {
   return axiosInstanceAuth.get(`/api/comments/${id}`);
 };
 
+export const getViewsByVideoId = (id: string) => {
+  return axiosInstanceAuth.get(`/api/stream/${id}/views`);
+};
+
 export const getMyVideos = () => axiosInstanceAuth.get(`/p-api/video/`);
 
 export const getMyInfo = () => axiosInstanceAuth.get(`/p-api/user/info`);

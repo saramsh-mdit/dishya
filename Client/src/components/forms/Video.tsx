@@ -65,11 +65,13 @@ const VideoForm = () => {
   const onSubmitHandler = async (data: videoFormType) => {
     if (file) {
       try {
+        let tag = "";
+        data.tags.forEach((item) => (tag = `${item} ${tag}`));
         const videofile: video = {
           image: file,
           title: data.title,
           description: data.description,
-          tags: JSON.stringify(data.tags),
+          tags: tag,
         };
         mutation.mutate(videofile);
       } catch (e) {

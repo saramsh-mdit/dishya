@@ -1,17 +1,17 @@
-import { Router } from 'express';
+import { Router } from "express";
 
-import logger from '../../utils/logger';
-import { addUser } from '../user/users.service';
-import { isAuthUser } from './auth.service';
+import logger from "../../utils/logger";
+import { addUser } from "../user/users.service";
+import { isAuthUser } from "./auth.service";
 
 const AuthController = Router();
 
-AuthController.post('/login', async (req, res) => {
+AuthController.post("/login", async (req, res) => {
   try {
     const { email, password } = req.body;
     if (!email && !password)
       throw {
-        message: 'email and password is required.',
+        message: "email and password is required.",
       };
     const data = await isAuthUser(email, password);
     res.send(data);
@@ -21,10 +21,10 @@ AuthController.post('/login', async (req, res) => {
   }
 });
 
-AuthController.post('/register', async (req, res) => {
+AuthController.post("/register", async (req, res) => {
   try {
-    const { username, password, email } = req.body;
-    const data = await addUser({ userName:username, password, email, isAdmin: false });
+    const { userName, password, email } = req.body;
+    const data = await addUser({ userName, password, email, isAdmin: false });
     res.status(200).send(data);
   } catch (err) {
     logger.error(err);

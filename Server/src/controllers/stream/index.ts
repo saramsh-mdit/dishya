@@ -6,6 +6,7 @@ import { getLiveVideos, getVideoById } from "../video/video.service";
 import {
   getRecommendataion,
   getSearchResult,
+  getViews,
   increaseViews,
 } from "./stream.service";
 import logger from "../../utils/logger";
@@ -49,7 +50,6 @@ StreamController.get("/:id", async (req, res) => {
       res.writeHead(206, header);
       file.pipe(res);
     } else {
-      await increaseViews(id);
       const head = {
         "Content-Length": fileSize,
         "Content-Type": "video/mp4",
@@ -57,6 +57,17 @@ StreamController.get("/:id", async (req, res) => {
       res.writeHead(200, head);
       fs.createReadStream(videoPath).pipe(res);
     }
+  } catch (err) {
+    res.status(400).send(err);
+  }
+});
+
+StreamController.get("/:id/views", async (req, res) => {
+  try {
+    const id = req.params.id;
+    await increaseViews(id);
+    const data = await getViews(id);
+    res.send(data);
   } catch (err) {
     res.status(400).send(err);
   }
