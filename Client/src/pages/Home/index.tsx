@@ -11,6 +11,9 @@ const Home = () => {
   const { isLoading, isError, data } = useQuery({
     queryKey: ["videos"],
     queryFn: getVideos,
+    onSuccess: (d: any) => {
+      console.log(d);
+    },
   });
 
   //   if (isLoading) return (<div className='flex gap-4 justify-center mx-auto mt-8 max-w-md w-full'>

@@ -30,13 +30,10 @@ export const VideoValidator = z.object({
   userId: z.string().uuid(),
   title: z.string(),
   description: z.string(),
-  tags:z.string().nullable()
+  tags: z.string().nullable(),
 });
 
 export type CommentType = z.infer<typeof CommentValidator>;
-
-
-
 export type LikeType = z.infer<typeof LikeValidator>;
 export type UserType = z.infer<typeof UserValidator>;
 export type ViewType = z.infer<typeof ViewValidator>;

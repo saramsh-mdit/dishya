@@ -67,7 +67,7 @@ const calculateFinalResult = (data?: resultData[]) => {
     const totalScore =
       markCalc(item.title, 40) +
       markCalc(item.description, 30) +
-      markCalc(item.tags, 30);
+      (item.tags ? 30 : 0);
     return { score: totalScore / 100, id: item._id };
   });
 };

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1683189349365" clover="3.2.0">
-  <project timestamp="1683189349366" name="All files">
-    <metrics statements="87" coveredstatements="84" conditionals="20" coveredconditionals="16" methods="15" coveredmethods="12" elements="122" coveredelements="112" complexity="0" loc="87" ncloc="87" packages="5" files="7" classes="7"/>
+<coverage generated="1683283442114" clover="3.2.0">
+  <project timestamp="1683283442114" name="All files">
+    <metrics statements="88" coveredstatements="85" conditionals="20" coveredconditionals="16" methods="15" coveredmethods="12" elements="123" coveredelements="113" complexity="0" loc="88" ncloc="88" packages="5" files="7" classes="7"/>
     <package name="src">
       <metrics statements="4" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
       <file name="data-source.ts" path="E:\_PROJECTS\FinalYearProject\Drishya\Server\src\data-source.ts">
@@ -25,7 +25,7 @@
       </file>
     </package>
     <package name="src.utils.algos">
-      <metrics statements="61" coveredstatements="60" conditionals="18" coveredconditionals="14" methods="11" coveredmethods="9"/>
+      <metrics statements="62" coveredstatements="61" conditionals="18" coveredconditionals="14" methods="11" coveredmethods="9"/>
       <file name="cosineAlgo.ts" path="E:\_PROJECTS\FinalYearProject\Drishya\Server\src\utils\algos\cosineAlgo.ts">
         <metrics statements="10" coveredstatements="10" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
         <line num="3" count="1" type="stmt"/>
@@ -70,7 +70,7 @@
         <line num="42" count="1" type="stmt"/>
       </file>
       <file name="recommendation.ts" path="E:\_PROJECTS\FinalYearProject\Drishya\Server\src\utils\algos\recommendation.ts">
-        <metrics statements="24" coveredstatements="23" conditionals="13" coveredconditionals="9" methods="8" coveredmethods="6"/>
+        <metrics statements="25" coveredstatements="24" conditionals="13" coveredconditionals="9" methods="8" coveredmethods="6"/>
         <line num="1" count="1" type="stmt"/>
         <line num="2" count="1" type="stmt"/>
         <line num="3" count="1" type="stmt"/>
@@ -93,8 +93,9 @@
         <line num="53" count="3" type="cond" truecount="1" falsecount="1"/>
         <line num="54" count="3" type="stmt"/>
         <line num="55" count="3" type="stmt"/>
-        <line num="57" count="3" type="stmt"/>
-        <line num="60" count="1" type="stmt"/>
+        <line num="57" count="1" type="stmt"/>
+        <line num="58" count="3" type="stmt"/>
+        <line num="61" count="1" type="stmt"/>
       </file>
     </package>
     <package name="src.utils.hash">
